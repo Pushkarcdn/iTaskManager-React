@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import React from 'react';
-import Navbar from './components/Navbar';
 import { v4 as uuidv4 } from 'uuid';
 
 function App() {
@@ -112,8 +111,6 @@ function App() {
 
   return (
     <>
-
-      <Navbar />
 
       <div className=' container bg-purple-200 px-10 py-10 mx-auto my-12 rounded-lg min-h-screen w-2/4'>
 
