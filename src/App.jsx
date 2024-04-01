@@ -8,15 +8,15 @@ function App() {
   const [todo, setTodo] = useState("");
 
   const saveToLS = () => {
-    localStorage.setItem('todos', JSON.stringify(todos))
+    // localStorage.setItem('todos', JSON.stringify(todos))
   }
 
   useEffect(() => {
 
-    if (localStorage.getItem('todos')) {
-      let oldTodos = JSON.parse(localStorage.getItem('todos'))
-      setTodos(oldTodos)
-    }
+    // if (localStorage.getItem('todos')) {
+    //   let oldTodos = JSON.parse(localStorage.getItem('todos'))
+    //   setTodos(oldTodos)
+    // }
 
   }, [])
 
