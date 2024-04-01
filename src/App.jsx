@@ -13,7 +13,7 @@ function App() {
 
   useEffect(() => {
 
-    if ((JSON.parse(localStorage.getItem('todos')).length >= 0)) {
+    if (localStorage.getItem('todos')) {
       let oldTodos = JSON.parse(localStorage.getItem('todos'))
       setTodos(oldTodos)
     }
