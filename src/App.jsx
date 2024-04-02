@@ -6,6 +6,7 @@ function App() {
 
   const [todos, setTodos] = useState([]);
   const [todo, setTodo] = useState("");
+  const [showCompleted, setShowCompleted] = useState(true);
 
   const saveToLS = () => {
     localStorage.setItem('todos', JSON.stringify(todos))
@@ -37,8 +38,6 @@ function App() {
 
   const handleCheckbox = (e) => {
 
-    // console.log(e, e.target, e.target.name);
-
     let id = e.target.name;
 
     let index = todos.findIndex((item) => {
@@ -59,8 +58,6 @@ function App() {
       return id === item.id;
     })
 
-    // let t = todos.filter((item) => { item.id === id })
-
     console.log(index)
 
     setTodo(todos[index].todo);
@@ -70,10 +67,6 @@ function App() {
   }
 
   const handleDelete = (e, id, toConfirm) => {
-
-    // console.log(e.target.name)
-
-    // let id = e.target.name;
 
     if (toConfirm) {
 
@@ -132,15 +125,17 @@ function App() {
 
           <p className='font-semibold'> {(todos.length === 0) ? 'Your Task list is empty !' : 'Your Task List'}</p>
 
+          <div onClick={() => { setShowCompleted(!showCompleted) }} className='cursor-default'><input type="checkbox" name="" id="" checked={showCompleted} onChange={() => { setShowCompleted(!showCompleted) }} /> <span>Show completed tasks</span></div>
+
           <div className="todos flex flex-col gap-3">
 
             {/* {todos.length === 0 && <p className='py-3'>Tour task list is empty!</p>} */}
 
             {todos.map((item) => {
 
-              return (
+              if (showCompleted || !item.isCompleted) {
 
-                <div key={item.id} className="todo flex items-center justify-between">
+                return (<div key={item.id} className="todo flex items-center justify-between">
 
                   <div className='flex gap-4 items-center'>
 
@@ -158,11 +153,13 @@ function App() {
 
                   </div>
 
-                </div>
+                </div>)
 
-              )
+              }
 
-            })}
+            })
+
+            }
 
           </div>
 
@@ -171,7 +168,9 @@ function App() {
       </div>
 
     </>
+
   )
+
 }
 
 export default App
