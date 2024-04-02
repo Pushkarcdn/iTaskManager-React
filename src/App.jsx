@@ -34,7 +34,27 @@ function App() {
 
   const handleAdd = (e) => {
 
-    setTodos([...todos, { id: uuidv4(), todo, isCompleted: false }])
+    // Create a new Date object
+    const now = new Date();
+
+    const month = now.getMonth() + 1; // Month starts from 0, so add 1
+    const day = now.getDate();
+
+    // Format the month and day components if needed (e.g., add leading zeros)
+    const formattedMonth = month < 10 ? '0' + month : month;
+    const formattedDay = day < 10 ? '0' + day : day;
+
+    // Combine month and day into a single variable
+    const monthAndDay = `${formattedMonth}-${formattedDay}`;
+
+    // Get the current time components
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+
+    const formattedTime = `${hours}:${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+    setTodos([...todos, { id: uuidv4(), todo, time: formattedTime, date: monthAndDay, isCompleted: false }])
     setTodo("")
 
   }
@@ -111,7 +131,7 @@ function App() {
 
       <Navbar />
 
-      <div className=' bg-purple-200 py-8 sm:py-12 my-8 sm:my-12 w-[90%] max-w-[800px] mx-auto px-4 sm:px-10 flex flex-col items-center rounded-lg min-h-[500px] tracking-wide '>
+      <div className=' bg-purple-200 py-8 sm:py-12 my-8 sm:my-12 w-[90%] max-w-[800px] mx-auto px-4 sm:px-10 flex flex-col items-center rounded-lg  tracking-wide'>
 
         <div className="add-todo flex flex-col gap-4 w-full items-center sm:items-start">
 
@@ -131,15 +151,14 @@ function App() {
 
           <div className='flex flex-col gap-4 items-center'>
 
-            <p className='font-semibold'> {(todos.length === 0) ? 'Your Task list is empty !' : 'Your Task List'}</p>
+            <p className='font-semibold'> {(todos.length === 0) ? `Your Task list is empty !` : 'Your Task List'}</p>
 
-            <div onClick={() => { setShowCompleted(!showCompleted) }} className='cursor-default'><input type="checkbox" name="" id="" checked={showCompleted} onChange={() => { setShowCompleted(!showCompleted) }} /> <span>Show completed tasks</span></div>
+            {todos.length >= 1 &&
+              <div onClick={() => { setShowCompleted(!showCompleted) }} className='cursor-default'><input type="checkbox" name="" id="" checked={showCompleted} onChange={() => { setShowCompleted(!showCompleted) }} /> <span>Show completed tasks</span></div>}
 
           </div>
 
           <div className="todos flex flex-col gap-3 w-full">
-
-            {/* {todos.length === 0 && <p className='py-3'>Tour task list is empty!</p>} */}
 
             {todos.map((item) => {
 
@@ -155,7 +174,13 @@ function App() {
 
                   </div>
 
-                  <div className="buttons flex gap-2">
+                  <div className="buttons flex gap-2 items-center">
+
+                    <p className='text-xs flex flex-col items-center  justify-center'>
+                      {item.time}
+                      <br />
+                      {item.date}
+                    </p>
 
                     <button onClick={(e) => { handleEdit(e, item.id) }} className='py-2 bg-purple-900 text-white px-2 rounded-md hover:bg-purple-950 transition-all duration-200'><MdOutlineModeEdit />
                     </button>
