@@ -5,9 +5,9 @@ function Navbar() {
         <>
 
             <nav>
-                <ul className='flex justify-between px-10 py-5 bg-purple-800 text-white'>
-                    <li className='font-bold'>iTodo</li>
-                    <li>Home</li>
+                <ul className='flex justify-between px-7 py-4 sm:py-5 bg-purple-800 text-white'>
+                    <li className='font-bold tracking-wider'>iTask Manager</li>
+                    <li className='tracking-wider'>Home</li>
                 </ul>
             </nav>
 
