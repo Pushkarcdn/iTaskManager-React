@@ -171,7 +171,7 @@ function App() {
 
         <div className="add-todo flex flex-col gap-4 w-full items-center sm:items-start">
 
-          <p className='font-semibold tracking-wide text-lg'>Add a todo</p>
+          <p className='font-semibold tracking-wide text-lg'>Add a task</p>
 
           <div className='flex gap-5 w-full justify-center items-center flex-col sm:flex-row '>
 
