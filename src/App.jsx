@@ -11,6 +11,8 @@ function App() {
   const [todo, setTodo] = useState("");
   const [showCompleted, setShowCompleted] = useState(true);
 
+  const [searchQuery, setSearchQuery] = useState("")
+
   const saveToLS = () => {
     localStorage.setItem('todos', JSON.stringify(todos))
   }
@@ -31,6 +33,40 @@ function App() {
   const handleChange = (e) => {
     setTodo(e.target.value)
   }
+
+  // Search section ---------------------------------------
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value)
+  }
+
+  const filteredTodos = todos.filter((item) => {
+    return (
+      item.todo.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.date.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.time.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  })
+
+  // making a state and updating filteredTodos on every render is a bad practice (running unlimited time continuously)
+
+  // const [filteredTodos, setFilteredTodos] = useState([]);
+
+  // useEffect(() => {
+
+  //   setFilteredTodos(
+
+  //     todos.filter((item) => {
+  //       return (
+  //         item.todo.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //         item.date.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //         item.time.toLowerCase().includes(searchQuery.toLowerCase())
+  //       )
+  //     })
+
+  //   )
+
+  // })
 
   const handleAdd = (e) => {
 
@@ -154,13 +190,19 @@ function App() {
             <p className='font-semibold'> {(todos.length === 0) ? `Your Task list is empty !` : 'Your Task List'}</p>
 
             {todos.length >= 1 &&
-              <div onClick={() => { setShowCompleted(!showCompleted) }} className='cursor-default'><input type="checkbox" name="" id="" checked={showCompleted} onChange={() => { setShowCompleted(!showCompleted) }} /> <span>Show completed tasks</span></div>}
+              <div onClick={() => { setShowCompleted(!showCompleted) }} className='cursor-default'><input type="checkbox" name="" id="" checked={showCompleted} onChange={() => { setShowCompleted(!showCompleted) }} /> <span>Show completed tasks</span>
+              </div>
+            }
+
+            <search>
+              <input type='text' value={searchQuery} onChange={handleSearch} className='rounded-md py-1 px-3 my-2 outline-none' placeholder='Search Your Tasks' ></input>
+            </search>
 
           </div>
 
           <div className="todos flex flex-col gap-3 w-full">
 
-            {todos.map((item) => {
+            {filteredTodos.map((item) => {
 
               if (showCompleted || !item.isCompleted) {
 
